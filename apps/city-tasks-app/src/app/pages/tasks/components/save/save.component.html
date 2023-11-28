@@ -1,0 +1,139 @@
+<city-tasks-header pageTitle="{{taskPageTitle}}" [showBackButton]="true"></city-tasks-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <form [formGroup]="taskForm" (ngSubmit)="save()" autocomplete="off">
+    <ion-list>
+      <ion-item>
+        <ion-input type="text"
+                   label="Name"
+                   formControlName="name"
+                   placeholder="Task name...">
+        </ion-input>
+        <city-tasks-form-errors field="name" [formGroup]="taskForm"></city-tasks-form-errors>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea formControlName="description"
+                      label="Description"
+                      rows="2"
+                      placeholder="Task description...">
+        </ion-textarea>
+        <city-tasks-form-errors field="description" [formGroup]="taskForm"></city-tasks-form-errors>
+      </ion-item>
+
+      <ion-item>
+        <ion-select [multiple]="false"
+                    label="Device"
+                    formControlName="deviceList"
+                    cancelText="Cancel"
+                    okText="Accept"
+                    mode="md"
+                    (ionChange)="deviceListChanged($event)">
+          <ion-select-option *ngFor="let device of devices" [value]="device.id">
+            {{ device.name }}
+          </ion-select-option>
+        </ion-select>
+        <city-tasks-form-errors field="deviceList" [formGroup]="taskForm"></city-tasks-form-errors>
+      </ion-item>
+
+      <ion-item>
+        <ion-select [multiple]="false"
+                    label="Operation"
+                    formControlName="deviceOperationList"
+                    cancelText="Cancel"
+                    okText="Accept"
+                    mode="md"
+                    (ionChange)="deviceOperationListChanged($event)">
+          <ion-select-option value="ACTIVATE">Activate</ion-select-option>
+          <ion-select-option value="DEACTIVATE">Deactivate</ion-select-option>
+        </ion-select>
+        <city-tasks-form-errors field="deviceOperationList" [formGroup]="taskForm"></city-tasks-form-errors>
+      </ion-item>
+
+      <ion-item>
+        <ion-input id="open-time-input"
+                   label="Execution time"
+                   type="text"
+                   readonly="true"
+                   formControlName="executionTime"
+                   placeholder="Select the hour and minute...">
+        </ion-input>
+        <city-tasks-form-errors field="executionTime" [formGroup]="taskForm"></city-tasks-form-errors>
+        <ion-popover trigger="open-time-input"
+                     show-backdrop="true"
+                     mode="md"
+                     alignment="end">
+          <ng-template>
+            <ion-datetime #popoverTime
+                          presentation="time"
+                          hour-cycle="h23"
+                          [showDefaultButtons]="true"
+                          (ionChange)="formatExecutionTimeValue(popoverTime.value)">
+            </ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+
+      <ion-item>
+        <ion-select [multiple]="true"
+                    label="Execution days"
+                    formControlName="executionDaysList"
+                    cancelText="Cancel"
+                    okText="Accept"
+                    mode="md"
+                    (ionChange)="executionDaysListChanged($event)">
+          <ion-select-option value="MON">Monday</ion-select-option>
+          <ion-select-option value="TUE">Tuesday</ion-select-option>
+          <ion-select-option value="WED">Wednesday</ion-select-option>
+          <ion-select-option value="THU">Thursday</ion-select-option>
+          <ion-select-option value="FRI">Friday</ion-select-option>
+          <ion-select-option value="SAT">Saturday</ion-select-option>
+          <ion-select-option value="SUN">Sunday</ion-select-option>
+        </ion-select>
+        <city-tasks-form-errors field="executionDaysList" [formGroup]="taskForm"></city-tasks-form-errors>
+      </ion-item>
+
+      <ion-item>
+        <ion-input id="open-date-input"
+                   label="Execute until"
+                   type="text"
+                   readonly="true"
+                   formControlName="executeUntil">
+        </ion-input>
+        <ion-popover trigger="open-date-input"
+                     show-backdrop="true"
+                     mode="md"
+                     alignment="end">
+          <ng-template>
+            <ion-datetime #popoverDate
+                          presentation="date"
+                          first-day-of-week="1"
+                          [showDefaultButtons]="true"
+                          (ionChange)="formatExecuteUntilValue(popoverDate.value)">
+            </ion-datetime>
+          </ng-template>
+        </ion-popover>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block"
+                      type="button"
+                      color="light"
+                      (click)="cancel()">
+            Cancel
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block"
+                      type="submit">
+            {{ isCreatingState() ? 'Create' : 'Update' }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+

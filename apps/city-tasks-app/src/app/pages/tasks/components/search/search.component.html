@@ -1,0 +1,13 @@
+<ion-list>
+  <ion-list-header>
+    <ion-label>
+      <h2>Search by:</h2>
+    </ion-label>
+  </ion-list-header>
+  <ion-item *ngFor="let option of searchOptions"
+            (click)="onSelectOption(option.action)"
+            detail="true"
+            button="true">
+    <ion-label>{{ option.title }}</ion-label>
+  </ion-item>
+</ion-list>

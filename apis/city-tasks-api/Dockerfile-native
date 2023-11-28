@@ -1,0 +1,21 @@
+#####################################################################################
+############################# Stage 1: Builder Image ################################
+#####################################################################################
+FROM hiperium/city-image-builder:1.8.0 AS builder
+
+COPY pom.xml                        pom.xml
+COPY apis/city-tasks-api/pom.xml    apis/city-tasks-api/pom.xml
+RUN mvn dependency:go-offline -B -f apis/city-tasks-api/pom.xml
+COPY apis/city-tasks-api/src        apis/city-tasks-api/src
+
+RUN mvn -T 4C clean native:compile -Pnative -DskipTests -f apis/city-tasks-api/pom.xml -Ddependency-check.skip=true
+
+#####################################################################################
+############################# Stage 2: Application Image ############################
+###### https://github.com/oracle/container-images/pkgs/container/oraclelinux ########
+#####################################################################################
+FROM oraclelinux:9-slim
+COPY --from=builder /workspace/apis/city-tasks-api/target/city-tasks-api application
+
+EXPOSE 8080
+CMD ["sh", "-c", "./application"]

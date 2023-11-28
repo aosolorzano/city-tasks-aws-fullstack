@@ -1,0 +1,15 @@
+{
+  "version": "0",
+  "id": "7bf73129-1428-4cd3-a780-95db273d1602",
+  "account": "123456789012",
+  "source": "com.hiperium.city.tasks.api",
+  "time": "2015-11-11T21:29:54Z",
+  "region": "us-east-1",
+  "resources": [],
+  "detail-type": "TaskExecutionEvent",
+  "detail": {
+    "taskId": 10,
+    "deviceId": "123",
+    "deviceOperation": "INVALID_VALUE"
+  }
+}

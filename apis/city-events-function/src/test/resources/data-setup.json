@@ -1,0 +1,58 @@
+{
+  "Events": [
+    {
+      "PutRequest": {
+        "Item": {
+          "id": {
+            "S": "a0ecb466-7ef5-47bf-a1ca-12f9f9328528"
+          },
+          "deviceId": {
+            "S": "123"
+          },
+          "taskId": {
+            "N": "101"
+          },
+          "operation": {
+            "S": "DEACTIVATE"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": {
+            "S": "bd253af4-af36-4d3c-ae05-5b9098fcbbb0"
+          },
+          "deviceId": {
+            "S": "456"
+          },
+          "taskId": {
+            "N": "102"
+          },
+          "operation": {
+            "S": "ACTIVATE"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "id": {
+            "S": "74b71424-3a00-4a55-acf7-4812771f720d"
+          },
+          "deviceId": {
+            "S": "456"
+          },
+          "taskId": {
+            "N": "102"
+          },
+          "operation": {
+            "S": "DEACTIVATE"
+          }
+        }
+      }
+    }
+  ]
+}

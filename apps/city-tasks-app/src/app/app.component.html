@@ -1,0 +1,37 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list *ngIf="!isUserLoggedIn" lines="none">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button="true" routerDirection="root" routerLinkActive="selected" (click)="login()" lines="none" detail="false">
+              <ion-icon slot="start" ios="log-in-outline" md="log-in-sharp"></ion-icon>
+              <ion-label>Login</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+        <ion-list id="inbox-list" *ngIf="isUserLoggedIn" lines="none">
+          <ion-list-header>Welcome</ion-list-header>
+          <ion-note>{{ username() }}</ion-note>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item routerDirection="root" [routerLink]="[p.url]" routerLinkActive="selected" lines="none" detail="false">
+              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-label>{{ p.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button="true" (click)="logout()" lines="none" detail="false">
+              <ion-icon slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
+              <ion-label>Sign Out</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+  <ion-progress-bar type="indeterminate" mode="md" *ngIf="loading()"></ion-progress-bar>
+</ion-app>

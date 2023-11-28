@@ -1,0 +1,52 @@
+<ion-content>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button (click)="presentPopover($event)">
+          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="about-header">
+    <div class="about-image big_ben"></div>
+  </div>
+
+  <div class="about-info">
+    <h3 class="ion-padding-top ion-padding-start">City Tasks Service</h3>
+    <p class="ion-padding-start ion-padding-end">
+      Welcome to our innovative full-stack application, meticulously architected
+      for native deployment on Amazon Web Services (AWS). Crafted with the
+      sophisticated Ionic Framework, Angular, and Amplify, our application offers
+      a seamless experience for managing and orchestrating Linux-like CRON jobs
+      directly from AWS's powerful backend.
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      This application is powered by a robust Spring Boot Native microservice
+      that harnesses the capabilities of the Quartz library, facilitating the
+      precise scheduling of recurring tasks. The microservice is elegantly
+      deployed on AWS Fargate ECS, utilizing the AWS Copilot tool for an optimized
+      cloud-native experience.
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      Our platform is strategically designed to synergize cron timer execution
+      with an array of AWS services. It provides the agility to automate operations
+      for devices at pre-set times and specific days, bringing precision and
+      reliability to your scheduling needs. The application is especially
+      beneficial for Internet of Things (IoT) projects, integrating effortlessly
+      with AWS IoT Core, Lambda functions, DynamoDB, and Cognito for a comprehensive
+      and secure IoT ecosystem.
+    </p>
+
+    <p class="ion-padding-start ion-padding-end">
+      Leverage our application to elevate your IoT solutions, streamline operations,
+      and harness the full potential of cloud automation with AWS.
+    </p>
+  </div>
+</ion-content>

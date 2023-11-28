@@ -1,0 +1,76 @@
+<ion-header mode="ios" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Tasks</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="create()">
+        <ion-icon name="add-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="onSearchTextChange($event)"
+                   debounce="300"
+                   placeholder="Search by {{ columnName }}..."
+                   animated="true">
+    </ion-searchbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentSearchOptionsPopover($event)" fill="clear">
+        <ion-icon name="ellipsis-vertical-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <ion-list lines="none" *ngIf="loaded()">
+    <ion-item *ngIf="tasks().length === 0">
+      <ion-label>
+        <h2>You don't have any Tasks created yet.</h2>
+      </ion-label>
+    </ion-item>
+
+    <ion-item-sliding *ngFor="let task of tasks() | search:searchText:columnName">
+      <ion-item-options side="start">
+        <ion-item-option color="success" (click)="details(task.id)">
+          <ion-icon slot="icon-only" name="document-text-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <ion-item class="animate__animated animate__fadeIn">
+        <ion-label slot="start">
+          <h3><strong>{{ task.hour | hourPipe }}:{{ task.minute | minutePipe }}</strong></h3>
+          <p>{{ task.name }}</p>
+        </ion-label>
+        <ion-label slot="end" class="ion-text-end">
+          <h3>{{ task.executionDays | daysPipe:3 }}</h3>
+          <p><strong>Until:</strong> {{ task.executeUntil? (task.executeUntil | date:"dd MMM yyyy") : 'Not expires'}}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option (click)="edit(task.id)">
+          <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="presentDeleteTaskAlert(task)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-list lines="none" *ngIf="!loaded()">
+    <ion-item *ngFor="let tasks of [1,1,1,1,1,1,1,1]">
+      <ion-label slot="start">
+        <h3><ion-skeleton-text animated="true" style="width: 50%"></ion-skeleton-text></h3>
+        <p><ion-skeleton-text animated="true" style="width: 100%"></ion-skeleton-text></p>
+      </ion-label>
+      <ion-label slot="end" class="ion-text-end">
+        <h3><ion-skeleton-text animated="true" style="width: 50px"></ion-skeleton-text></h3>
+        <p><ion-skeleton-text animated="true" style="width: 100px"></ion-skeleton-text></p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

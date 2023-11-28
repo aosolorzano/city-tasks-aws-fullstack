@@ -1,0 +1,17 @@
+{
+  "Changes": [
+    {
+      "Action": "record-set-action",
+      "ResourceRecordSet": {
+        "Name": "server-name-fqdn",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "alb-domain-name"
+          }
+        ]
+      }
+    }
+  ]
+}

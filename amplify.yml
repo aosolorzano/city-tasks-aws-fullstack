@@ -1,0 +1,33 @@
+version: 1
+
+applications:
+  - appRoot: apps/city-tasks-app
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - echo '{"version":1,"projects":{"city-tasks-app":{"root":"apps/city-tasks-app","projectType":"application","architect":{}}}}' > angular.json
+        build:
+          commands:
+            - amplifyPush --simple
+        postBuild:
+          commands:
+            - rm angular.json
+    frontend:
+      buildPath: /
+      phases:
+        preBuild:
+          commands:
+            - npm install -g pnpm
+            - pnpm install
+            - echo '{"aws_project_region":"us-east-1" }' > apps/city-tasks-app/src/amplifyconfiguration.json
+        build:
+          commands:
+            - npx nx run city-tasks-app:build:$USER_BRANCH
+      artifacts:
+        baseDirectory: dist/city-tasks-app
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*

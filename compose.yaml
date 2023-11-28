@@ -1,0 +1,135 @@
+version: '3.9'
+
+networks:
+  city-network:
+    driver: bridge
+
+volumes:
+  city-shared-data:
+
+services:
+  city-image-builder:
+    image: hiperium/city-image-builder:1.8.0
+    container_name: city-image-builder
+    build:
+      context: .
+      dockerfile: tools/docker/city-builder/Dockerfile
+
+  city-tasks-postgres:
+    image: postgres:14.4
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=CityTasksDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+    depends_on:
+      - city-image-builder
+    networks:
+      - city-network
+
+  city-tasks-api:
+    image: hiperium/city-tasks-api:1.8.0
+    container_name: tasks-api
+    build:
+      context: .
+      dockerfile: apis/city-tasks-api/Dockerfile-native
+    ports:
+      - "8080:8080"
+    env_file:
+      - apis/city-tasks-api/local.env
+    depends_on:
+      - city-image-builder
+      - city-tasks-postgres
+    networks:
+      - city-network
+
+  city-tasks-api-proxy:
+    image: hiperium/city-tasks-api-proxy:1.8.0
+    container_name: tasks-proxy
+    build:
+      context: .
+      dockerfile: apis/city-tasks-api-proxy/Dockerfile
+      args:
+        envoy_env: dev
+    ports:
+      - "443:443"
+    depends_on:
+      - city-image-builder
+      - city-tasks-postgres
+      - city-tasks-api
+    networks:
+      - city-network
+
+  city-events-function:
+    image: hiperium/city-events-function:1.8.0
+    container_name: events-function
+    build:
+      context: .
+      dockerfile: apis/city-events-function/Dockerfile-native
+    ports:
+      - "9000:8080"
+    env_file:
+      - apis/city-events-function/local.env
+    volumes:
+      - city-shared-data:/tmp/city/shared
+    depends_on:
+      - city-image-builder
+      - city-tasks-postgres
+      - city-tasks-api
+      - city-tasks-api-proxy
+    networks:
+      - city-network
+
+  city-localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - "4566:4566"
+    env_file:
+      # https://docs.localstack.cloud/references/configuration/
+      - tools/docker/localstack/local.env
+    volumes:
+      # CITY COMMON RESOURCES
+      - ./tools/docker/localstack/common-infra-setup.sh:/etc/localstack/init/ready.d/1_common-infra-setup.sh
+      # CITY API RESOURCES
+      - ./apis/city-tasks-api/src/test/resources/infra-setup.sh:/etc/localstack/init/ready.d/2_api-setup.sh
+      - ./apis/city-tasks-api/src/test/resources/data-setup.json:/var/lib/localstack/api-data.json
+      # CITY EVENTS RESOURCES
+      - ./apis/city-events-function/src/test/resources/infra-setup.sh:/etc/localstack/init/ready.d/3_events-setup.sh
+      - ./apis/city-events-function/src/test/resources/lambda-custom-setup.sh:/etc/localstack/init/ready.d/4_events-lambda-setup.sh
+      - ./apis/city-events-function/src/test/resources/data-setup.json:/var/lib/localstack/events-data.json
+      # CITY COMMON PERMISSIONS
+      - ./tools/docker/localstack/common-infra-permissions.sh:/etc/localstack/init/ready.d/5_common-infra-permissions.sh
+      # DOCKER RESOURCES
+      - city-shared-data:/tmp/city/shared
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - city-image-builder
+      - city-tasks-postgres
+      - city-tasks-api
+      - city-tasks-api-proxy
+      - city-events-function
+    networks:
+      - city-network
+
+  city-tasks-app:
+    image: hiperium/city-tasks-app:1.8.0
+    container_name: tasks-app
+    build:
+      context: .
+      dockerfile: apps/city-tasks-app/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - city-image-builder
+      - city-tasks-postgres
+      - city-tasks-api
+      - city-tasks-api-proxy
+      - city-events-function
+      - city-localstack
+    networks:
+      - city-network

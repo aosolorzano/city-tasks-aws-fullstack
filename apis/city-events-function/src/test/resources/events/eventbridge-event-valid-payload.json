@@ -1,0 +1,11 @@
+{
+  "Entries": [
+    {
+      "Source": "com.hiperium.city.tasks.api",
+      "DetailType": "TaskExecutionEvent",
+      "Detail": "{\"taskId\":3,\"deviceId\":\"123\",\"deviceOperation\":\"ACTIVATE\"}",
+      "Resources": [],
+      "EventBusName": "default"
+    }
+  ]
+}

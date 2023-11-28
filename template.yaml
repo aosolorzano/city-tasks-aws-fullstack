@@ -1,0 +1,84 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: 'SAM Template for the City Tasks Events project.'
+
+Globals:
+  Function:
+    Timeout: 20
+    MemorySize: 512
+    Runtime: provided.al2
+    Architectures:
+      - arm64
+
+Resources:
+  CityEventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: 'Events'
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: deviceId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: deviceId
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  CityEventsDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: 'EventsDLQ'
+
+  CityEventsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: 'city-events-function'
+      CodeUri: .
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
+      Description: 'Events Lambda function with a DynamoDB table and a DLQ.'
+      Events:
+        TaskExecutionEvent:
+          Type: EventBridgeRule
+          Properties:
+            Pattern:
+              source:
+                - com.hiperium.city.tasks.api
+              detail-type:
+                - TaskExecutionEvent
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref CityEventsTable
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt CityEventsDLQ.QueueName
+      Environment:
+        Variables:
+          CITY_TIME_ZONE_ID: '-05:00'
+          JAVA_TOOL_OPTIONS: '-XX:+TieredCompilation -XX:TieredStopAtLevel=1'
+    Metadata:
+      BuildMethod: makefile
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${CityEventsFunction}"
+      RetentionInDays: 7
+
+Outputs:
+  CityEventsFunction:
+    Description: 'Events Lambda function ARN.'
+    Value: !GetAtt CityEventsFunction.Arn
+
+  MyDLQArn:
+    Description: 'Events function DLQ ARN.'
+    Value: !GetAtt CityEventsDLQ.Arn
+
+  CityEventsTable:
+    Description: 'Events DynamoDB table ARN.'
+    Value: !GetAtt CityEventsTable.Arn
+
+  CityEventsFunctionIamRole:
+    Description: 'Implicit IAM Role ARN created for the Events function.'
+    Value: !GetAtt CityEventsFunctionRole.Arn

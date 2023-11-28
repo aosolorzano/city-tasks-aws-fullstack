@@ -1,0 +1,86 @@
+<city-tasks-header pageTitle="{{taskPageTitle}}" [showBackButton]="true"></city-tasks-header>
+
+<ion-content class="ion-padding" [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-input type="text"
+                 label="ID"
+                 [value]="task.id"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Name"
+                 [value]="task.name"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea type="text"
+                    label="Description"
+                    rows="2"
+                    [value]="task.description"
+                    readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Device ID"
+                 [value]="task.deviceId"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Device operation"
+                 [value]="task.deviceOperation"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Execution time"
+                 value="{{ task.hour | hourPipe }}:{{ task.minute | minutePipe }}"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Execution days"
+                 [value]="task.executionDays | daysPipe"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Execute until"
+                 value="{{ task.executeUntil? (task.executeUntil | date:'dd MMM yyyy HH:mm') : 'Not expires.' }}"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Created at"
+                 value="{{ task.createdAt | date:'dd MMM yyyy HH:mm' }}"
+                 readonly="true" />
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text"
+                 label="Updated at"
+                 value="{{ task.updatedAt | date:'dd MMM yyyy HH:mm' }}"
+                 readonly="true" />
+    </ion-item>
+  </ion-list>
+  <br>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" type="button" (click)="return()">
+          OK
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

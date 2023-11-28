@@ -1,0 +1,12 @@
+[
+  {
+    "id": "123",
+    "name": "Device 123",
+    "description": "Device 123 description"
+  },
+  {
+    "id": "456",
+    "name": "Device 456",
+    "description": "Device 456 description"
+  }
+]

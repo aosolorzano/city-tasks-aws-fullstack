@@ -1,0 +1,44 @@
+# The manifest for the "dev" environment.
+# Read the full specification for the "Environment" type at:
+# https://aws.github.io/copilot-cli/docs/manifest/environment/
+name: dev
+type: Environment
+
+# VPC network configuration.
+network:
+  vpc:
+    cidr: '10.15.0.0/16'
+    subnets:
+      public:
+        - cidr: '10.15.21.0/24'
+          az: 'us-east-1a'
+        - cidr: '10.15.22.0/24'
+          az: 'us-east-1b'
+      private:
+        - cidr: '10.15.30.0/24'
+          az: 'us-east-1a'
+        - cidr: '10.15.31.0/24'
+          az: 'us-east-1b'
+    security_group:
+      ingress:
+        - ip_protocol: tcp
+          ports: 443
+          cidr: '0.0.0.0/0'
+        - ip_protocol: tcp
+          ports: 8080
+          cidr: '0.0.0.0/0'
+    flow_logs:
+      retention: 7
+
+# Application Load Balancer configuration.
+http:
+  public:
+    certificates:
+      - arn:aws:acm:AWS_REGION:AWS_ACCOUNT_ID:certificate/ACM_CERTIFICATE_NUMBER
+    access_logs:
+      bucket_name: BUCKET_NAME
+      prefix: access-logs
+
+# Observability configuration for environment resources.
+observability:
+  container_insights: false

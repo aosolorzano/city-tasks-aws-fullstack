@@ -1,0 +1,28 @@
+#####################################################################################
+############################# Stage 1: Builder Image ################################
+#####################################################################################
+FROM hiperium/city-image-builder:1.8.0 AS builder
+ENV _JAVA_OPTIONS="-Xms5g -Xmx8g"
+
+COPY pom.xml                            pom.xml
+COPY apis/city-events-function/pom.xml  apis/city-events-function/pom.xml
+RUN mvn dependency:go-offline -B -f     apis/city-events-function/pom.xml
+COPY apis/city-events-function/src      apis/city-events-function/src
+COPY apis/city-events-function/tools    apis/city-events-function/tools
+
+RUN mvn -T 4C clean native:compile -Pnative -DskipTests -f apis/city-events-function/pom.xml -Ddependency-check.skip=true
+
+#####################################################################################
+############################ Stage 2: Application Image #############################
+#####################################################################################
+FROM public.ecr.aws/lambda/provided:al2
+ARG APP_ROOT=/workspace/apis/city-events-function
+
+COPY --from=builder ${APP_ROOT}/target/native               ${LAMBDA_TASK_ROOT}
+COPY --from=builder ${APP_ROOT}/tools/shell/bootstrap       ${LAMBDA_RUNTIME_DIR}
+COPY --from=builder ${APP_ROOT}/target/native-assembly.zip  /tmp/city/shared/events-function-assembly.zip
+
+RUN chmod +x ${LAMBDA_RUNTIME_DIR}/bootstrap
+
+EXPOSE 8080
+CMD [ "org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest" ]

@@ -1,0 +1,9 @@
+<ion-text color="danger" *ngIf="hasRequiredError()">
+  <p style="font-size: small">{{ requiredMessage }}</p>
+</ion-text>
+<ion-text color="danger" *ngIf="hasMinLengthError()">
+  <p style="font-size: small">{{ requiredMinLengthMessage }}</p>
+</ion-text>
+<ion-text color="danger" *ngIf="hasMaxLengthError()">
+  <p style="font-size: medium">{{ requiredMaxLengthMessage }}</p>
+</ion-text>
