@@ -88,7 +88,8 @@ amplify add hosting
 
 echo "
 IMPORTANT!!: Add the previous Amplify Hosting URL to your Cognito IdP for OAuth redirection.
-           Press any key to continue...
+
+             Press any key to continue...
 "
 read -n 1 -s -r -p ""
 clear

@@ -21,5 +21,5 @@ export const authConfig: AuthConfig = {
   redirectUri: 'http://localhost/',
   responseType: 'code',
   scope: 'phone email openid profile aws.cognito.signin.user.admin',
-  showDebugInformation: true
+  showDebugInformation: !environment.production
 };

@@ -18,8 +18,8 @@ export const authConfig: AuthConfig = {
   oidc: true,
   strictDiscoveryDocumentValidation: false,
   clientId: '6rmsact7vuhhlks06beu761sea',
-  redirectUri: 'https://dev.d1mkw71bxsv92v.amplifyapp.com/home/',
+  redirectUri: 'https://dev.d1mkw71bxsv92v.amplifyapp.com/',
   responseType: 'code',
   scope: 'phone email openid profile aws.cognito.signin.user.admin',
-  showDebugInformation: environment.production
+  showDebugInformation: !environment.production
 };
