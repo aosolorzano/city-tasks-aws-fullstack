@@ -13,6 +13,7 @@ applications:
         postBuild:
           commands:
             - rm angular.json
+            - rm apps/city-tasks-app/src/amplifyconfiguration.json
     frontend:
       buildPath: /
       phases:
@@ -20,10 +21,13 @@ applications:
           commands:
             - npm install -g pnpm
             - pnpm install
-            - echo '{"aws_project_region":"us-east-1" }' > apps/city-tasks-app/src/amplifyconfiguration.json
+            - echo '{"aws_project_region":"us-east-1"}' > apps/city-tasks-app/src/amplifyconfiguration.json
         build:
           commands:
-            - npx nx run city-tasks-app:build:$USER_BRANCH
+            - npx nx run city-tasks-app:build:$USER_BRANCH --verbose
+        postBuild:
+          commands:
+            - rm apps/city-tasks-app/src/amplifyconfiguration.json
       artifacts:
         baseDirectory: dist/city-tasks-app
         files:
