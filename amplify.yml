@@ -13,7 +13,6 @@ applications:
         postBuild:
           commands:
             - rm angular.json
-            - rm apps/city-tasks-app/src/amplifyconfiguration.json
     frontend:
       buildPath: /
       phases:
@@ -25,9 +24,6 @@ applications:
         build:
           commands:
             - npx nx run city-tasks-app:build:$USER_BRANCH --verbose
-        postBuild:
-          commands:
-            - rm apps/city-tasks-app/src/amplifyconfiguration.json
       artifacts:
         baseDirectory: dist/city-tasks-app
         files:
