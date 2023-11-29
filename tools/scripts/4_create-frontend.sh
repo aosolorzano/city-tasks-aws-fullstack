@@ -52,13 +52,17 @@ if [ -z "$amplify_app_id" ]; then
 fi
 echo "- Amplify Project ID: $amplify_app_id"
 
+### GETTING CURRENT GIT BRANCH
+git_branch=$(git branch --show-current)
+echo "- Current Git Branch: $git_branch"
+
 echo ""
 echo "UPDATING IONIC/ANGULAR CONFIGURATION FILES..."
 cat "$WORKING_DIR"/tools/scripts/templates/angular/environment-"$AWS_WORKLOADS_ENV".ts > \
     "$WORKING_DIR"/apps/city-tasks-app/src/environments/environment.ts
 
 workloads_aws_region=$(aws configure get region --profile "$AWS_WORKLOADS_PROFILE")
-sed -i'.bak' -e "s/ALB_API_ENDPOINT/$alb_domain_name/g; s/IDP_AWS_REGION/$workloads_aws_region/g; s/COGNITO_USER_POOL_ID/$cognito_user_pool_id/g; s/COGNITO_APP_CLIENT_ID_WEB/$cognito_app_client_id_web/g; s/AWS_WORKLOADS_ENV/$AWS_WORKLOADS_ENV/g; s/AMPLIFY_APP_ID/$amplify_app_id/g;" \
+sed -i'.bak' -e "s/ALB_API_ENDPOINT/$alb_domain_name/g; s/IDP_AWS_REGION/$workloads_aws_region/g; s/COGNITO_USER_POOL_ID/$cognito_user_pool_id/g; s/COGNITO_APP_CLIENT_ID_WEB/$cognito_app_client_id_web/g; s/GIT_BRANCH/$git_branch/g; s/AMPLIFY_APP_ID/$amplify_app_id/g;" \
       "$WORKING_DIR"/apps/city-tasks-app/src/environments/environment.ts
 rm -f "$WORKING_DIR"/apps/city-tasks-app/src/environments/environment.ts.bak
 echo "DONE!"
@@ -89,7 +93,7 @@ amplify add hosting
 echo "
 IMPORTANT!!: Add the previous Amplify Hosting URL to your Cognito IdP for OAuth redirection.
 
-             Press any key to continue...
+             PRESS ANY KEY TO CONTINUE...
 "
 read -n 1 -s -r -p ""
 clear

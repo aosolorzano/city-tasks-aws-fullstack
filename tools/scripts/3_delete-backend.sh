@@ -61,6 +61,7 @@ echo "DONE!"
 
 ### DELETE ALB DOMAIN FROM ROUTE53
 if [ "$alb_domain_name" ]; then
+  echo ""
   read -r -p "Do you want to <delete> the ALB domain name from Route53? [Y/n] " delete_alb_domain_name
   delete_alb_domain_name=$(echo "$delete_alb_domain_name" | tr '[:upper:]' '[:lower:]')
 
@@ -69,9 +70,12 @@ if [ "$alb_domain_name" ]; then
     echo ">> No problem at all. You can delete it later using 'Helper Menu', option 8."
   else
     export ALB_DOMAIN_NAME="$alb_domain_name"
-    sh "$WORKING_DIR"/tools/scripts/helper/8-delete-alb-domain-from-route53.sh
+    sh "$WORKING_DIR"/tools/scripts/helper/8_delete-alb-domain-from-route53.sh
   fi
 fi
 
-### REVERTING CONFIGURATION FILES
+echo ""
+echo "CLEANING CONFIGURATION FILES..."
 sh "$WORKING_DIR"/tools/scripts/helper/1_revert-automated-scripts.sh
+echo ""
+echo "DONE!"
