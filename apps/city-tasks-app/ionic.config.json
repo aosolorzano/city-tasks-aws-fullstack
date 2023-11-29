@@ -1,7 +1,5 @@
 {
   "name": "city-tasks-app",
-  "integrations": {
-    "capacitor": {}
-  },
+  "integrations": {},
   "type": "angular"
 }

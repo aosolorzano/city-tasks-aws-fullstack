@@ -72,20 +72,25 @@ git push --set-upstream origin main
 echo ""
 
 clear
-echo -e "
-DONE!\n
-CREATING AMPLIFY HOSTING ON AWS...\n
+echo "
+DONE!
+
+CREATING AMPLIFY HOSTING ON AWS...
+
 NOTE: The following procedure is manual. The script will ask to select options.
       Select 'Hosting with Amplify Console' and 'Continuous deployment'.
-      Finally, the script will open a browser window to complete the process on the AWS console.\n
+      Finally, the script will open a browser window to complete the process on the AWS console.
+
       Please, press any key to continue..."
 read -n 1 -s -r -p ""
 echo ""
 amplify add hosting
 
 echo "
-IMPORTANT: Add the previous Amplify URL to your Cognito IdP config for OAuth redirection.
+IMPORTANT!!: Add the previous Amplify Hosting URL to your Cognito IdP for OAuth redirection.
            Press any key to continue...
 "
 read -n 1 -s -r -p ""
 clear
+echo ""
+echo "DONE!"

@@ -83,7 +83,7 @@ hosted_zone_id=$(echo "$hosted_zone_id" | cut -d'/' -f3)
 aws route53 change-resource-record-sets   \
   --hosted-zone-id "$hosted_zone_id"      \
   --change-batch file://"$WORKING_DIR"/tools/aws/route53/tasks-api-alb-record-set-operation.json \
-  --profile "$aws_route53_profile"
+  --profile "$aws_route53_profile" > /dev/null
 echo "DONE!"
 
 ### CLEANING RECORD-SET FILE

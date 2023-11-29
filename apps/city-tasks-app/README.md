@@ -1,12 +1,13 @@
-# Tasks Service: An Ionic/Angular PWA with Amplify and NgRx for reactive programming.
+## City Tasks App: An Ionic/Angular application with NgRx for reactive programming.
 
-## Required Tools
+### Required Tools
 - pnpm add -g @angular/cli
 - pnpm add -g @ionic/cli
 - pnpm add -g http-server
 - pnpm add -g @aws-amplify/cli
 
-## Adding Amplify dependencies
+
+### Adding Amplify dependencies
 Install the Amplify dependency:
 ```bash
 pnpm add aws-amplify
@@ -14,13 +15,13 @@ pnpm add aws-amplify
 We are not installing the `@aws-amplify/ui-angular` package because we're not using any Amplify UI component like the Authentication.
 
 
-## Adding OAuth2 dependencies
+### Adding OAuth2 dependencies
 Install the OAuth2 dependencies:
 ```bash
 pnpm add angular-oauth2-oidc
 ```
 
-## Adding Angular Reactive (NgRx) dependencies
+### Adding Angular Reactive (NgRx) dependencies
 For NgRx, we need to install the following dependencies:
 ```
 pnpm add @ngrx/store@latest && pnpm exec nx g @ngrx/store:ng-add
@@ -31,7 +32,8 @@ pnpm add @ngrx/data@latest && pnpm exec nx g @ngrx/data:ng-add
 ```
 These commands edit the "app.module.ts" file with the required imports and initial configurations. See the blog article for more details.
 
-## Adding the Animate CSS
+
+### Adding the Animate CSS
 [Animate.css](https://animate.style/) is a library of ready-to-use, cross-browser animations for use in your web projects.
 ```bash
 pnpm add animate.css
@@ -41,14 +43,16 @@ Modify the "global.scss" file to add the following code:
 @import "~animate.css/animate.min.css";
 ```
 
-## Ionic DateTime
+
+### Ionic DateTime
 For this component, we must install the "date-fns" and "date-fn-tz" dependency for datetime validation and manipulation:
 ```bash
 pnpm add date-fns
 pnpm add date-fns-tz
 ```
 
-## Other Ionic/Angular commands
+
+### Other Ionic/Angular commands
 First, install the Ionic/Angular Nx extension:
 ```bash
 pnpm add --save-dev --save-exact @nxext/ionic-angular
@@ -62,7 +66,7 @@ nx generate @nxext/ionic-angular:app  \
     --unitTestRunner=jest               \
     --e2eTestRunner=cypress             \
     --linter=eslint                     \
-    --capacitor=true
+    --capacitor=false
 ```
 To create an Ionic **page**:
 ```bash

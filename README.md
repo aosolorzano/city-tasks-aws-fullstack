@@ -10,11 +10,10 @@
 You can read the following articles from my **Medium.com** account to get more project details:
 
 1. [Multi-Account environment on AWS using IAM Identity Center](https://aosolorzano.medium.com/implementing-a-multi-account-environment-with-aws-organizations-and-the-iam-identity-center-d1cdb40bdf4d).
-2. [OAuth2 in Spring Boot Native microservice](https://aosolorzano.medium.com/oauth2-in-spring-boot-native-reactive-microservice-with-amazon-cognito-as-oidc-service-c454d84a5234).
-3. [Deploying Spring Boot Native microservice using Cross-Account deployment](https://aosolorzano.medium.com/spring-boot-native-microservice-on-ecs-fargate-using-aws-copilot-cli-for-cross-account-deployment-73b1836f21f7).
-4. [End-to-End Encryption using TLS ECDSA certificate and ACM with Copilot CLI](https://aosolorzano.medium.com/end-to-end-encryption-using-tls-ecdsa-certificate-acm-and-aws-copilot-cli-64f5daafe977).
-5. [EDA using Amazon EventBridge, Lambda, and SAM-CLI, with Fargate ECS as Event Source](https://aosolorzano.medium.com/eda-with-eventbridge-and-lambda-using-sam-cli-with-spring-boot-ms-on-fargate-ecs-as-event-source-9abee237be08).
-6. [Storing EDA events in DynamoDB from a Native Lambda Function using Spring Cloud Functions](https://aosolorzano.medium.com/storing-eda-events-in-dynamodb-using-a-native-lambda-function-with-graalvm-spring-cloud-functions-c32cee4775fc).
+2. [End-to-End Encryption using TLS ECDSA certificate and ACM with Copilot CLI](https://aosolorzano.medium.com/end-to-end-encryption-using-tls-ecdsa-certificate-acm-and-aws-copilot-cli-64f5daafe977).
+3. [EDA using Amazon EventBridge, Lambda, and SAM-CLI, with Fargate ECS as Event Source](https://aosolorzano.medium.com/eda-with-eventbridge-and-lambda-using-sam-cli-with-spring-boot-ms-on-fargate-ecs-as-event-source-9abee237be08).
+4. [Storing EDA events in DynamoDB from a Native Lambda Function using Spring Cloud Functions](https://aosolorzano.medium.com/storing-eda-events-in-dynamodb-using-a-native-lambda-function-with-graalvm-spring-cloud-functions-c32cee4775fc).
+5. [FullStack application on AWS using Ionic/Angular Frameworks inside an Nx Monorepo with PNPM and Amplify](https://aosolorzano.medium.com/fullstack-app-on-aws-using-ionic-angular-frameworks-inside-an-nx-monorepo-with-pnpn-and-amplify-588e124452e4).
 
 
 ## Description.
