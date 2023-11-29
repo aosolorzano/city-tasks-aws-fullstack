@@ -28,6 +28,3 @@ applications:
         baseDirectory: dist/city-tasks-app
         files:
           - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
