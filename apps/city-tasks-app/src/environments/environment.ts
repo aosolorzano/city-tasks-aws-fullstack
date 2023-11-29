@@ -18,7 +18,7 @@ export const authConfig: AuthConfig = {
   oidc: true,
   strictDiscoveryDocumentValidation: false,
   clientId: '6rmsact7vuhhlks06beu761sea',
-  redirectUri: 'https://dev.d25bs4n1phuxj.amplifyapp.com/', // MUST use the root domain for the Amplify Hosting.
+  redirectUri: 'https://dev.d25bs4n1phuxj.amplifyapp.com/home/', // MUST use the root domain for the Amplify Hosting.
   responseType: 'code',
   scope: 'phone email openid profile aws.cognito.signin.user.admin',
   showDebugInformation: environment.production
