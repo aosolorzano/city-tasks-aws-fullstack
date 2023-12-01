@@ -96,54 +96,55 @@ echo "DONE!"
 echo ""
 echo "BUILDING SAM PROJECT LOCALLY..."
 rm -rf node_modules
+rm -rf apps/city-tasks-app/node_modules
 sam build --config-env "$AWS_WORKLOADS_ENV"
 
 echo ""
 echo "DEPLOYING SAM PROJECT INTO AWS..."
-sam deploy                                \
-  --config-env "$AWS_WORKLOADS_ENV"       \
-  --disable-rollback                      \
+sam deploy                                      \
+  --config-env "$AWS_WORKLOADS_ENV"             \
+  --disable-rollback                            \
   --profile "$AWS_WORKLOADS_PROFILE"
 
 echo ""
 echo "INITIALIZING COPILOT PROJECT ON AWS..."
 export AWS_PROFILE="$AWS_WORKLOADS_PROFILE"
-copilot init                              \
-  --app city-tasks                        \
-  --name city-tasks-api                   \
-  --type 'Load Balanced Web Service'      \
-  --port 8080                             \
-  --tag '1.8.0'                           \
-  --dockerfile './apis/city-tasks-api/Dockerfile'
+copilot init                                    \
+  --app city-tasks                              \
+  --name city-tasks-api                         \
+  --type 'Load Balanced Web Service'            \
+  --port 8080                                   \
+  --tag '1.8.0'                                 \
+  --dockerfile './apis/city-tasks-api/Dockerfile-native'
 echo ""
 echo "DONE!"
 
 echo ""
 echo "INITIALIZING COPILOT ENVIRONMENT ON AWS..."
-copilot env init                              \
-  --app city-tasks                            \
-  --name "$AWS_WORKLOADS_ENV"                 \
-  --profile "$AWS_WORKLOADS_PROFILE"          \
+copilot env init                        \
+  --app city-tasks                      \
+  --name "$AWS_WORKLOADS_ENV"           \
+  --profile "$AWS_WORKLOADS_PROFILE"    \
   --default-config
 echo ""
 echo "DONE!"
 
 echo ""
 echo "DEPLOYING COPILOT ECS CLUSTER ON AWS..."
-copilot env deploy                            \
-  --app city-tasks                            \
+copilot env deploy                      \
+  --app city-tasks                      \
   --name "$AWS_WORKLOADS_ENV"
 echo ""
 echo "DONE!"
 
 echo ""
 echo "DEPLOYING COPILOT API SERVICE ON ECS..."
-copilot deploy                                \
-  --app city-tasks                            \
-  --name city-tasks-api                       \
-  --env "$AWS_WORKLOADS_ENV"                  \
-  --tag '1.8.0'                               \
-  --no-rollback                               \
+copilot deploy                          \
+  --app city-tasks                      \
+  --name city-tasks-api                 \
+  --env "$AWS_WORKLOADS_ENV"            \
+  --tag '1.8.0'                         \
+  --no-rollback                         \
   --resource-tags project=Hiperium,copilot-application-type=city-tasks-api,copilot-application-version=1.8.0
 echo ""
 echo "DONE!"
@@ -174,7 +175,7 @@ fi
 echo "DONE!"
 
 ### LOADING DEVICE TEST DATA INTO DYNAMODB
-if [ "$AWS_WORKLOADS_ENV" == "dev" ]; then
+if [ "$AWS_WORKLOADS_ENV" == "dev" ] || [ "$AWS_WORKLOADS_ENV" == "test" ]; then
   echo ""
   echo "WRITING DEVICE TESTING DATA INTO DYNAMODB..."
   aws dynamodb batch-write-item \

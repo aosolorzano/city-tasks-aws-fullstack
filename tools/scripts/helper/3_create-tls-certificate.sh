@@ -21,15 +21,16 @@ fi
 ### CREATE CA CERTIFICATE
 echo ""
 echo "Creating CA certificate..."
-openssl ecparam                 \
-  -name prime256v1              \
-  -genkey                       \
-  -out ca-key.pem               \
+openssl ecparam                     \
+  -name prime256v1                  \
+  -genkey                           \
+  -out ca-key.pem                   \
   -outform PEM
-openssl req -new -x509 -sha256  \
-  -key ca-key.pem               \
-  -out ca-cert.pem              \
-  -days 365                     \
+
+openssl req -new -x509 -sha256      \
+  -key ca-key.pem                   \
+  -out ca-cert.pem                  \
+  -days 365                         \
   -subj "/C=EC/ST=Pichincha/L=UIO/O=Hiperium Company/OU=Innovation/CN=$ca_domain_name/emailAddress=support@$ca_domain_name"
 echo "DONE!"
 
@@ -41,6 +42,7 @@ openssl ecparam                 \
   -genkey                       \
   -out server-key.pem           \
   -outform PEM
+
 openssl req -new -sha256        \
   -key server-key.pem           \
   -out server-cert.pem          \
@@ -69,6 +71,7 @@ echo "DONE!"
 ### CREATING WORKLOAD ENVIRONMENT DIRECTORY
 mkdir -p "$WORKING_DIR"/tools/certs/"$AWS_WORKLOADS_ENV"
 
-### MOVING CERTIFICATE FILES TO THE CORRESPONDING DIRECTORY
+echo ""
+echo "Moving certificates to the '$AWS_WORKLOADS_ENV' Certification's directory..."
 cp server-key-no-header.pem "$WORKING_DIR"/tools/certs/"$AWS_WORKLOADS_ENV"/server-key.pem
 mv server-cert-"$AWS_WORKLOADS_ENV".pem "$WORKING_DIR"/tools/certs/"$AWS_WORKLOADS_ENV"

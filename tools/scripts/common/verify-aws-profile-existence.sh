@@ -11,15 +11,7 @@ fi
 ### VERIFYING AWS PROFILE CONFIGURATION
 if [ ! -f ~/.aws/config ] || ! grep -q "$AWS_PROFILE" ~/.aws/config; then
   echo ""
-  echo "The profile '$AWS_PROFILE' is not configured in ~/.aws/config."
-  echo ""
-  exit 1
-fi
-
-### VERIFYING AWS PROFILE CREDENTIALS
-if [ ! -f ~/.aws/credentials ] || ! grep -q "$AWS_PROFILE" ~/.aws/credentials; then
-  echo ""
-  echo "The profile '$AWS_PROFILE' is not configured in ~/.aws/credentials."
+  echo "ERROR: The profile '$AWS_PROFILE' is not configured."
   echo ""
   exit 1
 fi

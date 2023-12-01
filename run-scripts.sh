@@ -85,48 +85,81 @@ helperMenu() {
     clear
     echo ""
     echo "DONE!"
+    echo ""
     helperMenu
     ;;
   2)
     clear
     sh "$WORKING_DIR"/tools/scripts/helper/2_docker-system-prune.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   3)
     clear
     sh "$WORKING_DIR"/tools/scripts/helper/3_create-tls-certificate.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   4)
     clear
     sh "$WORKING_DIR"/tools/scripts/helper/4_import-tls-certificate-to-acm.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   5)
     clear
     sh "$WORKING_DIR"/tools/scripts/helper/5_delete-tls-certificate-from-acm.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   6)
     clear
     export DNS_OPERATION="CREATE"
     sh "$WORKING_DIR"/tools/scripts/helper/6_7_register-alb-domain-in-route53.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   7)
     clear
     export DNS_OPERATION="UPSERT"
     sh "$WORKING_DIR"/tools/scripts/helper/6_7_register-alb-domain-in-route53.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   8)
     clear
     sh "$WORKING_DIR"/tools/scripts/helper/8_delete-alb-domain-from-route53.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   9)
     clear
     sh "$WORKING_DIR"/tools/scripts/helper/9_create-aws-git-connection.sh
+    clear
+    echo ""
+    echo "DONE!"
+    echo ""
     helperMenu
     ;;
   [Rr])

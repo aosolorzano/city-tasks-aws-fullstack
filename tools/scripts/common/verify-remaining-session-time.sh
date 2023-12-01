@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PRINT_TIME_REMAINING=$1
+SHOW_TIME_REMAINING=$1
 
 ### CHECK IF THE AWS PROFILE WAS PROVIDED
 if [ "$AWS_WORKLOADS_PROFILE" != "default" ]; then
@@ -15,12 +15,12 @@ if [ -z "$PROFILE" ]; then
 fi
 
 ### CHECK IF THE VERIFICATION IS ONLY FOR THE EXPIRATION DATE
-if [[ -z "$PRINT_TIME_REMAINING" ]]; then
-  PRINT_TIME_REMAINING="false"
+if [[ -z "$SHOW_TIME_REMAINING" ]]; then
+  SHOW_TIME_REMAINING="false"
 fi
 
 ### GETTING START-URL FROM THE AWS PROFILE
-SSO_START_URL=$(aws configure get sso_start_url --profile "$PROFILE")
+SSO_START_URL=$(grep -A 2 "\[sso-session city-sso\]" ~/.aws/config | grep "sso_start_url" | awk -F' = ' '{print $2}')
 if [[ -z "$SSO_START_URL" ]]; then
   echo "ERROR: No SSO start URL found for profile '$PROFILE'." >&2
   exit 1
@@ -57,13 +57,13 @@ CURRENT_EPOCH=$(date +"%s")
 DIFF_MINUTES=$(( (EXPIRATION_EPOCH - CURRENT_EPOCH) / 60 ))
 if [[ $DIFF_MINUTES -le 0 ]]; then
   echo ""
-  echo "The SSO session for profile '$PROFILE' has expired." >&2
+  echo "ERROR: The SSO session for profile '$PROFILE' has expired." >&2
   echo ""
   exit 1
 fi
 
 ### CHECK IF THE VERIFICATION IS ONLY FOR THE EXPIRATION DATE
-if [[ "$PRINT_TIME_REMAINING" == "true" ]]; then
+if [[ "$SHOW_TIME_REMAINING" == "true" ]]; then
   echo ""
   echo "The <Expiration Date> of your session is: $EXPIRATION_DATE"
   HOURS=$(( DIFF_MINUTES / 60 ))

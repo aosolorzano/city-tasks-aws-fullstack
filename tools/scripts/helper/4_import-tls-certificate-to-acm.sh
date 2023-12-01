@@ -21,5 +21,5 @@ aws acm import-certificate                                            \
   --private-key         fileb://server-key.pem                        \
   --certificate-chain   fileb://"$CA_CERTS_DIR"/ca-cert.pem           \
   --certificate         fileb://server-cert-"$AWS_WORKLOADS_ENV".pem  \
-  --profile             "$AWS_WORKLOADS_PROFILE"
+  --profile             "$AWS_WORKLOADS_PROFILE" > /dev/null
 echo "DONE!"

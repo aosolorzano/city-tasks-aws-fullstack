@@ -1,14 +1,14 @@
 {
   "Changes": [
     {
-      "Action": "record-set-action",
+      "Action": "DELETE",
       "ResourceRecordSet": {
-        "Name": "server-name-fqdn",
+        "Name": "dev.hiperium.cloud",
         "Type": "CNAME",
         "TTL": 300,
         "ResourceRecords": [
           {
-            "Value": "alb-domain-name"
+            "Value": ""
           }
         ]
       }

@@ -87,6 +87,8 @@ environments:
           build:
             args:
               envoy_env: dev
+            cache_from:
+              - hiperium/city-tasks-api-proxy:1.8.0
         variables:
           ENVOY_LOG_LEVEL: debug
     variables:

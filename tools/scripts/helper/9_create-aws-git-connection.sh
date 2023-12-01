@@ -60,6 +60,7 @@ echo "DONE!"
 
 echo "
 NOTE: The following procedure is manual.
+
       Please, go to 'Developer Tools' in your AWS Console, and select the 'Connections' option to complete the process.
       Then, return to this terminal and press any key to continue..."
 read -n 1 -s -r -p ""
